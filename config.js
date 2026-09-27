@@ -4,9 +4,9 @@
    ========================================================= */
 window.TV_CONFIG = {
   // Kontakt podaci koji se prikazuju na sajtu
-  phone: "+381 60 000 0000",        // broj za prikaz
-  phoneLink: "+381600000000",       // isti broj bez razmaka (za poziv klikom)
-  email: "info@termovolt.rs",       // adresa za prikaz na sajtu
+  phone: "+381 60 087 6403",        // broj za prikaz
+  phoneLink: "+381600876403",       // isti broj bez razmaka (za poziv klikom)
+  email: "termobatkevolt@gmail.com",// adresa za prikaz na sajtu
   area: "Beograd i okolina",        // područje rada (može i na više jezika, vidi ispod)
   areaTranslations: {
     de: "Belgrad und Umgebung",
@@ -15,7 +15,7 @@ window.TV_CONFIG = {
 
   // Kontakt forma: besplatni ključ sa https://web3forms.com
   // (upišete svoju e-mail adresu, ključ stiže na mejl, nalepite ga ovde)
-  web3formsKey: "UPISITE-VAS-WEB3FORMS-KLJUC",
+  web3formsKey: "ab9969e1-eac4-48dc-8ad7-f6a32f35dbb6",
 
   // Jezik koji se prikazuje prvi put ako posetilac nema podešen jezik pretraživača:
   // "sr-Latn", "sr-Cyrl", "de" ili "en"
