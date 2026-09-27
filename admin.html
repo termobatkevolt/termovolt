@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>TermoVolt – administracija</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: var(--paper); }
+    .admin-head { background: var(--white); border-bottom: 1px solid var(--line); }
+    .admin-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 1rem; }
+    .admin-head a.back { font-weight: 600; text-decoration: none; }
+    main.admin { padding: 2rem 0 4rem; }
+    .card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(1.25rem, 3vw, 2rem); margin-bottom: 1.5rem; }
+    .card h2 { font-size: 1.3rem; margin-bottom: .4rem; }
+    .card > p.hint { color: var(--ink-soft); font-size: .95rem; margin-bottom: 1.25rem; max-width: 70ch; }
+    .fields { display: grid; gap: 1rem; }
+    .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label.f { display: grid; gap: .35rem; font-size: .9rem; font-weight: 600; }
+    label.f small { font-weight: 400; color: var(--ink-soft); }
+    .f input, .f textarea, .f select { font: 400 1rem/1.4 var(--body); color: var(--ink); border: 1.5px solid var(--line); border-radius: 8px; padding: .7rem .8rem; width: 100%; background: #fff; }
+    .f textarea { min-height: 90px; resize: vertical; }
+    .check { display: flex; gap: .5rem; align-items: center; font-size: .95rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin-top: 1.25rem; }
+    .btn-small { padding: .6rem 1rem; font-size: .9rem; }
+    .btn-danger { background: none; color: var(--coral-deep); border-color: var(--coral); }
+    .btn-danger:hover { background: var(--coral); color: #fff; }
+    .msg { font-weight: 600; }
+    .msg.ok { color: #16794a; } .msg.err { color: var(--coral-deep); }
+    .drop { border: 2px dashed var(--line); border-radius: var(--radius); padding: 1.5rem; text-align: center; color: var(--ink-soft); cursor: pointer; }
+    .drop.over { border-color: var(--blue); background: var(--blue-pale); }
+    .thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: .75rem; margin-top: 1rem; }
+    .thumb { position: relative; border-radius: 8px; overflow: hidden; background: var(--panel); aspect-ratio: 4/3; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb .x { position: absolute; top: 4px; right: 4px; width: 28px; height: 28px; border-radius: 50%; border: 0; background: rgba(36,52,71,.85); color: #fff; cursor: pointer; font-size: 1.1rem; line-height: 1; }
+    .thumb .cover-btn { position: absolute; left: 4px; bottom: 4px; border: 0; border-radius: 999px; font: 600 .72rem/1 var(--body); padding: .35rem .55rem; cursor: pointer; background: rgba(255,255,255,.9); color: var(--ink); }
+    .thumb.is-cover .cover-btn { background: var(--coral); color: #fff; cursor: default; }
+    .plist { list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; }
+    .plist li { display: grid; grid-template-columns: 96px 1fr auto; gap: 1rem; align-items: center; padding: .6rem; border: 1px solid var(--line); border-radius: 10px; }
+    .plist img { width: 96px; height: 72px; object-fit: cover; border-radius: 6px; background: var(--panel); }
+    .plist .meta { font-size: .88rem; color: var(--ink-soft); }
+    .plist .btns { display: flex; gap: .5rem; }
+    .connected { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; }
+    [hidden] { display: none !important; }
+    @media (max-width: 720px) {
+      .cols, .cols2 { grid-template-columns: 1fr; }
+      .plist li { grid-template-columns: 72px 1fr; }
+      .plist img { width: 72px; height: 54px; }
+      .plist .btns { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+<header class="admin-head">
+  <div class="wrap">
+    <span class="brand"><img src="img/logo-icon.png" alt="" width="40" height="34"> <span>Administracija</span></span>
+    <a class="back" href="./">Nazad na sajt</a>
+  </div>
+</header>
+
+<main class="admin wrap">
+
+  <!-- Povezivanje -->
+  <section class="card" id="connect-card">
+    <h2>Prijava</h2>
+    <p class="hint">Sajt čuva projekte i slike direktno u vašem GitHub repozitorijumu. Za prijavu vam treba GitHub token sa dozvolom za izmenu sadržaja (uputstvo je u fajlu README.md). Token se čuva samo u ovom pretraživaču.</p>
+    <form id="connect-form" class="fields">
+      <div class="cols">
+        <label class="f">GitHub korisničko ime<input name="owner" required autocomplete="username"></label>
+        <label class="f">Repozitorijum<input name="repo" required></label>
+        <label class="f">Token<input name="token" type="password" required autocomplete="current-password"></label>
+      </div>
+      <label class="check"><input type="checkbox" name="remember" checked> Zapamti prijavu na ovom uređaju</label>
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Prijavi se</button>
+        <span class="msg" id="connect-msg" role="status"></span>
+      </div>
+    </form>
+  </section>
+
+  <section class="card" id="session-card" hidden>
+    <div class="connected">
+      <p>Prijavljeni ste na <strong id="session-repo"></strong></p>
+      <button class="btn btn-ghost btn-small" type="button" id="logout">Odjavi se</button>
+    </div>
+  </section>
+
+  <!-- Projekat -->
+  <section class="card" id="editor-card" hidden>
+    <h2 id="editor-title">Novi projekat</h2>
+    <p class="hint">Obavezan je samo naziv na srpskom (latinicom) i bar jedna slika. Ćirilica se pravi automatski. Ako ne unesete nemački ili engleski tekst, prikazaće se srpski.</p>
+    <form id="project-form" class="fields">
+      <div class="cols">
+        <label class="f">Naziv, srpski (latinica) *<input name="title_sr" required></label>
+        <label class="f">Naziv, nemački<input name="title_de"></label>
+        <label class="f">Naziv, engleski<input name="title_en"></label>
+      </div>
+      <div class="cols">
+        <label class="f">Opis, srpski<textarea name="desc_sr"></textarea></label>
+        <label class="f">Opis, nemački<textarea name="desc_de"></textarea></label>
+        <label class="f">Opis, engleski<textarea name="desc_en"></textarea></label>
+      </div>
+      <div class="cols2">
+        <label class="f"><span>Mesto <small>(na primer: Novi Sad)</small></span><input name="location"></label>
+        <label class="f">Mesec i godina<input name="date" type="month"></label>
+      </div>
+
+      <div>
+        <div class="drop" id="drop" tabindex="0" role="button">
+          Prevucite slike ovde ili kliknite da ih izaberete
+          <input type="file" id="file-input" accept="image/*" multiple hidden>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="submit" id="save-btn">Objavi projekat</button>
+        <button class="btn btn-ghost btn-small" type="button" id="cancel-edit" hidden>Otkaži izmene</button>
+        <span class="msg" id="save-msg" role="status"></span>
+      </div>
+    </form>
+  </section>
+
+  <!-- Lista -->
+  <section class="card" id="list-card" hidden>
+    <h2>Objavljeni projekti</h2>
+    <p class="hint">Novi projekti se prikazuju prvi. Posle svake izmene sajt se osveži za 1 do 2 minuta.</p>
+    <ul class="plist" id="plist"></ul>
+    <p class="hint" id="plist-empty" hidden>Još nema objavljenih projekata.</p>
+  </section>
+</main>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
