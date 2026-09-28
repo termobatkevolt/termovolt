@@ -1,1 +1,27 @@
-[]
+[
+  {
+    "id": "2026-09-28-probni-projekat-y6wi",
+    "date": "",
+    "location": "",
+    "title": {
+      "sr": "Probni projekat",
+      "de": "Erstes Versuch",
+      "en": "Test Project"
+    },
+    "description": {
+      "sr": "",
+      "de": "",
+      "en": ""
+    },
+    "images": [
+      {
+        "full": "projects/2026-09-28-probni-projekat-y6wi/ffu3bg.jpg",
+        "thumb": "projects/2026-09-28-probni-projekat-y6wi/ffu3bg-t.jpg"
+      },
+      {
+        "full": "projects/2026-09-28-probni-projekat-y6wi/1s7sry.jpg",
+        "thumb": "projects/2026-09-28-probni-projekat-y6wi/1s7sry-t.jpg"
+      }
+    ]
+  }
+]
